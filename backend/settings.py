@@ -11,7 +11,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Seguridad
-
 SECRET_KEY = 'django-insecure-i@+zl&*sdkooyavt2*szc&lfy(dl7j8khgp5=b!d)2s#8j!s#g'
 
 DEBUG = True
@@ -19,22 +18,34 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Aplicaciones instaladas
+
+# Aplicaciones
 
 INSTALLED_APPS = [
 
     'django.contrib.admin',
+
     'django.contrib.auth',
+
     'django.contrib.contenttypes',
+
     'django.contrib.sessions',
+
     'django.contrib.messages',
+
     'django.contrib.staticfiles',
 
-    # Aplicaciones agregadas
+
+    # Instaladas
+
     'rest_framework',
+
     'corsheaders',
+
     'users',
+
 ]
+
 
 
 # Middleware
@@ -45,8 +56,11 @@ MIDDLEWARE = [
 
     'django.contrib.sessions.middleware.SessionMiddleware',
 
+
     # CORS para React
+
     'corsheaders.middleware.CorsMiddleware',
+
 
     'django.middleware.common.CommonMiddleware',
 
@@ -57,20 +71,29 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
 
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
+
 
 
 ROOT_URLCONF = 'backend.urls'
 
 
-# Templates
+
+# IMPORTANTE PARA DJANGO ADMIN
 
 TEMPLATES = [
+
     {
+
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+
         'DIRS': [],
+
         'APP_DIRS': True,
+
         'OPTIONS': {
+
             'context_processors': [
 
                 'django.template.context_processors.request',
@@ -80,12 +103,19 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
             ],
+
         },
+
     },
+
 ]
 
 
+
 WSGI_APPLICATION = 'backend.wsgi.application'
+
+ASGI_APPLICATION = 'backend.asgi.application'
+
 
 
 # Base de datos
@@ -103,27 +133,41 @@ DATABASES = {
 }
 
 
-# Validación de contraseñas
+
+# Validadores contraseña
 
 AUTH_PASSWORD_VALIDATORS = [
 
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+
     },
 
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
+
     },
 
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
+
     },
 
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
+
     },
 
 ]
+
 
 
 # Usuario personalizado
@@ -131,15 +175,20 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = 'users.CustomUser'
 
 
-# Internacionalización
+
+# Idioma
 
 LANGUAGE_CODE = 'en-us'
 
+
 TIME_ZONE = 'UTC'
+
 
 USE_I18N = True
 
+
 USE_TZ = True
+
 
 
 # Archivos estáticos
@@ -156,16 +205,21 @@ REST_FRAMEWORK = {
 
         'rest_framework_simplejwt.authentication.JWTAuthentication',
 
-    )
+    ),
 
 }
 
 
 
-# Configuración CORS para React
+# CORS React
 
 CORS_ALLOWED_ORIGINS = [
 
-    "http://localhost:3000",
+    'http://localhost:3000',
+
+    'http://127.0.0.1:3000',
 
 ]
+
+
+CORS_ALLOW_CREDENTIALS = True

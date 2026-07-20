@@ -1,196 +1,254 @@
-// src/Login.js
+import React,{useState} from "react";
+import axios from "axios";
 
-import React, { useState } from 'react';
-import axios from 'axios';
 
+function Login(){
 
-const Login = () => {
 
-    const [isRegistering, setIsRegistering] = useState(false);
+const [register,setRegister]=useState(false);
 
-    const [username, setUsername] = useState('');
+const [username,setUsername]=useState("");
 
-    const [password, setPassword] = useState('');
+const [password,setPassword]=useState("");
 
-    const [message, setMessage] = useState('');
+const [message,setMessage]=useState("");
 
 
-    const handleSubmit = async (e) => {
 
-        e.preventDefault();
+const enviar=async(e)=>{
 
 
-        const url = isRegistering
-            ? 'http://localhost:8000/api/register/'
-            : 'http://localhost:8000/api/login/';
+e.preventDefault();
 
 
-        try {
 
-            const response = await axios.post(url, {
+const url=register
 
-                username: username,
+?"http://127.0.0.1:8000/api/register/"
 
-                password: password
+:"http://127.0.0.1:8000/api/login/";
 
-            });
 
 
-            if (isRegistering) {
+try{
 
-                setMessage(
-                    'Registro exitoso. Ahora puedes iniciar sesión.'
-                );
 
-                setIsRegistering(false);
+const respuesta=await axios.post(
 
-            } else {
+url,
 
-                setMessage(
-                    'Inicio de sesión exitoso.'
-                );
+{
+username,
+password
+}
 
-                console.log(
-                    'Respuesta del servidor:',
-                    response.data
-                );
+);
 
-            }
 
 
-        } catch (error) {
+if(register){
 
-            console.log(error);
 
-            setMessage(
-                'Hubo un error. Verifica tus datos.'
-            );
+setMessage(
+"Registro exitoso"
+);
 
-        }
 
-    };
+setRegister(false);
 
 
-    return (
+}else{
 
-        <div>
 
-            <h1 className="cecyflix-logo">
-                CECYFLIX
-            </h1>
+localStorage.setItem(
 
+"access",
 
-            <h2>
-                {
-                    isRegistering
-                    ? 'Crear cuenta'
-                    : 'Iniciar sesión'
-                }
-            </h2>
+respuesta.data.access
 
+);
 
 
-            <form onSubmit={handleSubmit}>
+localStorage.setItem(
 
+"refresh",
 
-                <input
+respuesta.data.refresh
 
-                    type="text"
+);
 
-                    placeholder="Usuario"
 
-                    value={username}
 
-                    onChange={(e) =>
-                        setUsername(e.target.value)
-                    }
+setMessage(
+"Inicio de sesión correcto"
+);
 
-                />
 
+}
 
 
-                <input
 
-                    type="password"
+}
 
-                    placeholder="Contraseña"
+catch(error){
 
-                    value={password}
 
-                    onChange={(e) =>
-                        setPassword(e.target.value)
-                    }
+console.log(error);
 
-                />
 
+setMessage(
 
+"Error de conexión o datos incorrectos"
 
-                <button type="submit">
+);
 
-                    {
-                        isRegistering
-                        ? 'Registrarse'
-                        : 'Ingresar'
-                    }
 
-                </button>
+}
 
 
-            </form>
+}
 
 
 
-            <p>
-                {message}
-            </p>
 
+return(
 
 
-            <p>
+<div>
 
-                {
-                    isRegistering
-                    ? '¿Ya tienes cuenta?'
-                    : '¿No tienes cuenta?'
-                }
 
+<h1 className="cecyflix-logo">
 
-                {' '}
+CECYFLIX
 
+</h1>
 
-                <span
 
-                    onClick={() =>
-                        setIsRegistering(!isRegistering)
-                    }
 
-                    style={{
+<h2>
 
-                        color: '#e50914',
+{
 
-                        cursor: 'pointer'
+register?
 
-                    }}
+"Crear cuenta":
 
-                >
+"Iniciar sesión"
 
-                    {
-                        isRegistering
-                        ? 'Inicia sesión'
-                        : 'Regístrate'
-                    }
+}
 
-                </span>
+</h2>
 
 
-            </p>
 
+<form onSubmit={enviar}>
 
-        </div>
 
-    );
+<input
 
-};
+type="text"
+
+placeholder="Usuario"
+
+value={username}
+
+onChange={
+e=>setUsername(e.target.value)
+}
+
+/>
+
+
+
+<input
+
+type="password"
+
+placeholder="Contraseña"
+
+value={password}
+
+onChange={
+e=>setPassword(e.target.value)
+}
+
+/>
+
+
+
+<button>
+
+
+{
+
+register?
+
+"Registrarse":
+
+"Ingresar"
+
+}
+
+
+</button>
+
+
+</form>
+
+
+
+<p>
+
+{message}
+
+</p>
+
+
+
+<p>
+
+
+<span
+
+style={{
+color:"#e50914",
+cursor:"pointer"
+}}
+
+onClick={()=>{
+
+setRegister(!register);
+
+setMessage("");
+
+}}
+
+>
+
+
+{
+
+register?
+
+"Ya tengo cuenta":
+
+"Crear cuenta"
+
+}
+
+
+</span>
+
+
+</p>
+
+
+</div>
+
+
+)
+
+}
 
 
 export default Login;
