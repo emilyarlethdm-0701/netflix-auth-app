@@ -1,25 +1,20 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import './App.css';
-
 import Login from './Login';
+import MovieGallery from './MovieGallery';
 
+function App() {
+  const [token, setToken] = useState(null);
 
-function App(){
-
-
-return(
-
-<div className="App">
-
-<Login/>
-
-</div>
-
-);
-
-
+  return (
+    <div className="App">
+      {!token ? (
+        <Login setToken={setToken} />
+      ) : (
+        <MovieGallery token={token} />
+      )}
+    </div>
+  );
 }
-
 
 export default App;
